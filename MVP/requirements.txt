@@ -1,6 +1,0 @@
-streamlit 
-requests 
-pandas 
-matplotlib 
-plotly 
-google-generativeai

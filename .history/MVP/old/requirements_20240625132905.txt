@@ -1,0 +1,11 @@
+streamlit 
+requests 
+pandas 
+matplotlib 
+plotly 
+google-generativeai
+
+
+
+#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
+
