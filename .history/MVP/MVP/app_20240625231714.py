@@ -86,36 +86,11 @@ class DocumentAnalyzer:
     def analyze_document(self, document_text):
         """Analyse un document financier et extrait les informations clés."""
         prompt = (
-            f"Veuillez analyser attentivement le document financier suivant et fournir des informations détaillées pertinentes pour l'évaluation des risques de crédit. "
-            f"Cela inclut, mais sans s'y limiter, les éléments suivants : \n"
-            f"1. Les principaux indicateurs financiers, par exemple : \n"
-            f"   - Ratio de liquidité : capacité de l'entreprise à couvrir ses dettes à court terme avec ses actifs liquides.\n"
-            f"   - Ratio de solvabilité : mesure de la capacité de l'entreprise à honorer ses dettes à long terme.\n"
-            f"   - Rentabilité : profitabilité de l'entreprise, incluant les marges bénéficiaires brutes et nettes.\n"
-            f"   - Endettement : niveau de dettes par rapport aux actifs ou au capital propre.\n"
-            f"2. Les risques potentiels, tels que : \n"
-            f"   - Risques de marché : fluctuations des taux d'intérêt, des taux de change, ou des prix des matières premières.\n"
-            f"   - Risques de gestion : stabilité de l'équipe dirigeante, qualité de la gouvernance.\n"
-            f"   - Risques structurels : dépendance à un nombre limité de clients ou de fournisseurs.\n"
-            f"   - Risques opérationnels : problèmes de production, inefficacités, ou autres défis opérationnels.\n"
-            f"3. Toute information contextuelle ou observation pouvant affecter la solvabilité, par exemple : \n"
-            f"   - Changements dans le secteur d'activité : nouvelles régulations, innovations technologiques, etc.\n"
-            f"   - Événements économiques ou politiques récents : récessions, instabilités politiques, etc.\n"
-            f"   - Variations significatives dans les performances financières : croissance ou déclin soudain des revenus ou des bénéfices.\n"
-            f"\n"
-            f"Le document à analyser est le suivant : \n\n"
-            f"{document_text}\n"
-            f"\n"
-            f"Enfin, présentez les informations recueillies sous forme de dictionnaire structuré pour faciliter leur interprétation et leur utilisation ultérieure. "
-            f"Par exemple : \n"
-            f"{{\n"
-            f"   'Ratios financiers': {{'liquidité': 1.5, 'solvabilité': 0.7, 'rentabilité': 12%, 'endettement': 60%}},\n"
-            f"   'Risques potentiels': {{'marché': 'volatilité des taux de change', 'gestion': 'rotation élevée des cadres', 'structurels': 'dépendance à un fournisseur clé', 'opérationnels': 'défaillance de la chaîne d'approvisionnement'}},\n"
-            f"   'Informations contextuelles': 'nouvelles régulations impactant le secteur',\n"
-            f"   'Observations': 'augmentation soudaine des bénéfices due à une réduction des coûts de production'\n"
-            f"}}"
+            f"Analyse the following financial document and provide insights relevant to credit risk assessment, "
+            f"including key financial indicators, potential risks, and any information that might affect creditworthiness: ALWAYS IN FRENCH \n\n"
+            f"{document_text}. in final give info as dictionary
+            "
         )
-
         response = get_response(prompt)
         return response.text
 

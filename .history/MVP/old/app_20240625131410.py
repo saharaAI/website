@@ -19,66 +19,12 @@ st.set_page_config(
     layout="wide",
 )
 
-
 # Entêtes et introduction
 st.title("Sahara Analytics - Solutions Personnalisées de Gestion du Risque de Crédit")
 st.markdown("---")
 
 # --- Classes pour l'application ---
-import random
 
-def generer_document_aleatoire():
-    """Génère un texte simulant un document financier pour tester l'application."""
-
-    entreprises = ["ABC Inc.", "Tech Solutions Ltd.", "Global Enterprises", "Data Analytics Corp."]
-    secteurs = ["technologie", "finance", "énergie", "santé"]
-    indicateurs = {
-        "chiffre d'affaires": {"plage": (1000000, 100000000), "suffixe": "€"},
-        "bénéfice net": {"plage": (50000, 1000000), "suffixe": "€"},
-        "ratio d'endettement": {"plage": (0.1, 2.0), "suffixe": ""},
-        "flux de trésorerie disponible": {"plage": (-200000, 500000), "suffixe": "€"},
-    }
-
-    entreprise = random.choice(entreprises)
-    secteur = random.choice(secteurs)
-
-    document = f"**Analyse Financière de {entreprise}**\n\n"
-    document += f"{entreprise} est une entreprise du secteur {secteur}."
-
-    for indicateur, valeurs in indicateurs.items():
-        valeur = random.uniform(valeurs["plage"][0], valeurs["plage"][1])
-        document += f"\n- {indicateur.capitalize()} : {valeur:.2f}{valeurs['suffixe']}"
-
-    document += "\n\n---"
-
-    document += "\n\n**Conclusion**"
-
-    conclusions = [
-        "La crédit est un risque à court terme.",
-        "La crédit est un risque à long terme.",
-        "La crédit est un risque à long terme.",
-
-    ]
-    document += "\n\n" + random.choice(conclusions)
-
-    # Ajouter des phrases aléatoires pour simuler un texte plus réaliste
-    phrases_aleatoires = [
-        "L'entreprise prévoit une croissance de son chiffre d'affaires de 10% au cours de l'année prochaine.",
-        "La direction a mis en place un plan de réduction des coûts pour améliorer la rentabilité.",
-        "Des risques liés à la concurrence et à l'évolution du marché sont à prendre en compte.",
-        "L'entreprise dispose d'une situation financière solide avec un faible niveau d'endettement.",
-        "La direction a mis en place des mesures de securité pour garantir la confidentialité des données.",
-        "La direction a mis en place des mesures de securité pour garantir la confidentialité des données.",
-        "L'entreprise a un historique de plus de 100 ans de gestion des risques.",
-        
-    ]
-    document += "\n\n" + random.choice(phrases_aleatoires)
-
-    document += "\n\n---"
-
-
-    # call gemini api
-    return document
 class DocumentAnalyzer:
     def __init__(self):
         pass
@@ -86,36 +32,10 @@ class DocumentAnalyzer:
     def analyze_document(self, document_text):
         """Analyse un document financier et extrait les informations clés."""
         prompt = (
-            f"Veuillez analyser attentivement le document financier suivant et fournir des informations détaillées pertinentes pour l'évaluation des risques de crédit. "
-            f"Cela inclut, mais sans s'y limiter, les éléments suivants : \n"
-            f"1. Les principaux indicateurs financiers, par exemple : \n"
-            f"   - Ratio de liquidité : capacité de l'entreprise à couvrir ses dettes à court terme avec ses actifs liquides.\n"
-            f"   - Ratio de solvabilité : mesure de la capacité de l'entreprise à honorer ses dettes à long terme.\n"
-            f"   - Rentabilité : profitabilité de l'entreprise, incluant les marges bénéficiaires brutes et nettes.\n"
-            f"   - Endettement : niveau de dettes par rapport aux actifs ou au capital propre.\n"
-            f"2. Les risques potentiels, tels que : \n"
-            f"   - Risques de marché : fluctuations des taux d'intérêt, des taux de change, ou des prix des matières premières.\n"
-            f"   - Risques de gestion : stabilité de l'équipe dirigeante, qualité de la gouvernance.\n"
-            f"   - Risques structurels : dépendance à un nombre limité de clients ou de fournisseurs.\n"
-            f"   - Risques opérationnels : problèmes de production, inefficacités, ou autres défis opérationnels.\n"
-            f"3. Toute information contextuelle ou observation pouvant affecter la solvabilité, par exemple : \n"
-            f"   - Changements dans le secteur d'activité : nouvelles régulations, innovations technologiques, etc.\n"
-            f"   - Événements économiques ou politiques récents : récessions, instabilités politiques, etc.\n"
-            f"   - Variations significatives dans les performances financières : croissance ou déclin soudain des revenus ou des bénéfices.\n"
-            f"\n"
-            f"Le document à analyser est le suivant : \n\n"
-            f"{document_text}\n"
-            f"\n"
-            f"Enfin, présentez les informations recueillies sous forme de dictionnaire structuré pour faciliter leur interprétation et leur utilisation ultérieure. "
-            f"Par exemple : \n"
-            f"{{\n"
-            f"   'Ratios financiers': {{'liquidité': 1.5, 'solvabilité': 0.7, 'rentabilité': 12%, 'endettement': 60%}},\n"
-            f"   'Risques potentiels': {{'marché': 'volatilité des taux de change', 'gestion': 'rotation élevée des cadres', 'structurels': 'dépendance à un fournisseur clé', 'opérationnels': 'défaillance de la chaîne d'approvisionnement'}},\n"
-            f"   'Informations contextuelles': 'nouvelles régulations impactant le secteur',\n"
-            f"   'Observations': 'augmentation soudaine des bénéfices due à une réduction des coûts de production'\n"
-            f"}}"
+            f"Analyse the following financial document and provide insights relevant to credit risk assessment, "
+            f"including key financial indicators, potential risks, and any information that might affect creditworthiness: \n\n"
+            f"{document_text}"
         )
-
         response = get_response(prompt)
         return response.text
 
@@ -276,7 +196,7 @@ selected_section = st.sidebar.selectbox("Choisissez une section :", sections)
 
 if selected_section == "Analyse de Documents":
     st.header("Analyse de Documents")
-    document_text = st.text_area("Collez le texte du document ici :", height=200, value=generer_document_aleatoire())
+    document_text = st.text_area("Collez le texte du document ici :", height=200)
 
     if st.button("Analyser le Document"):
         if document_text:
