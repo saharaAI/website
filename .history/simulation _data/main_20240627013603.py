@@ -1,12 +1,10 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
-import warnings
-warnings.filterwarnings('ignore')
+
 class CreditDataGenerator:
-    def __init__(self, num_samples=1000, default_percent=20):
+    def __init__(self, num_samples=1000):
         self.num_samples = num_samples
-        self.default_percent = default_percent
         
         # Initialize variables
         self.ID = np.arange(1, num_samples + 1)
@@ -28,10 +26,16 @@ class CreditDataGenerator:
         self.x12 = np.random.choice(['0', '1', '2', '3+'], size=num_samples,
                                     p=[0.4, 0.3, 0.2, 0.1])  # Number of dependents
     
-    def sigmoid(self, x):
-        # Sparse sigmoid to avoid overflow and underflow
-        return np.where(x >= 0, 1 / (1 + np.exp(-x)), np.exp(x) / (1 + np.exp(x)))
-    
+    """def sigmoid(self, x):
+        return 1 / (1 + np.exp(-x))"""
+    def sigmoid(x):
+        idx = x > 0
+        out = np.empty(x.size)
+        out[idx] = 1 / (1. + np.exp(-x[idx]))
+        exp_x = np.exp(x[~idx])
+        out[~idx] = exp_x / (1. + exp_x)
+        return out
+        
     def ground_truth_pr(self, X, alpha=None):
         if alpha is None:
             alpha = np.random.rand(X.shape[1])  # Generate random alpha if not provided
@@ -40,14 +44,8 @@ class CreditDataGenerator:
     
     def simulate_y(self, X, alpha=None):
         pr = self.ground_truth_pr(X, alpha)
-        
-        # Compute the probability threshold to achieve desired default percentage
-        threshold = np.percentile(pr, 100 - self.default_percent)
-        
-        # Classify y based on the threshold
-        y = np.where(pr >= threshold, 1, 0)
-        
-        return y
+        pr = np.clip(pr, 0.001, 0.999)  # Clip probabilities to avoid extremes
+        return np.random.binomial(1, pr)
     
     def generate_data(self):
         # One-hot encoding categorical variables
@@ -91,7 +89,7 @@ class CreditDataGenerator:
 
 # Example usage:
 if __name__ == "__main__":
-    generator = CreditDataGenerator(num_samples=1000, default_percent=50)  # Adjust default_percent as desired : ca marche pas ! 
+    generator = CreditDataGenerator(num_samples=1000)
     data, class_0_percent, class_1_percent = generator.generate_data()
     print("Class 0 percentage:", class_0_percent)
     print("Class 1 percentage:", class_1_percent)

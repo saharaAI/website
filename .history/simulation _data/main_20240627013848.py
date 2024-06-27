@@ -1,8 +1,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
-import warnings
-warnings.filterwarnings('ignore')
+
 class CreditDataGenerator:
     def __init__(self, num_samples=1000, default_percent=20):
         self.num_samples = num_samples
@@ -41,13 +40,10 @@ class CreditDataGenerator:
     def simulate_y(self, X, alpha=None):
         pr = self.ground_truth_pr(X, alpha)
         
-        # Compute the probability threshold to achieve desired default percentage
+        # Adjust probability threshold based on desired default percentage
         threshold = np.percentile(pr, 100 - self.default_percent)
         
-        # Classify y based on the threshold
-        y = np.where(pr >= threshold, 1, 0)
-        
-        return y
+        return (pr >= threshold).astype(int)
     
     def generate_data(self):
         # One-hot encoding categorical variables
@@ -91,7 +87,7 @@ class CreditDataGenerator:
 
 # Example usage:
 if __name__ == "__main__":
-    generator = CreditDataGenerator(num_samples=1000, default_percent=50)  # Adjust default_percent as desired : ca marche pas ! 
+    generator = CreditDataGenerator(num_samples=1000, default_percent=30)  # Adjust default_percent as desired
     data, class_0_percent, class_1_percent = generator.generate_data()
     print("Class 0 percentage:", class_0_percent)
     print("Class 1 percentage:", class_1_percent)

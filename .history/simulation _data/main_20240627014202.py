@@ -1,8 +1,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
-import warnings
-warnings.filterwarnings('ignore')
+
 class CreditDataGenerator:
     def __init__(self, num_samples=1000, default_percent=20):
         self.num_samples = num_samples
