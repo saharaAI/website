@@ -40,8 +40,6 @@ class CreditRiskModel:
             nn.ReLU(),
             nn.Linear(64, 32),
             nn.ReLU(),
-            nn.Linear(32, 32),
-            nn.ReLU(),
             nn.Linear(32, 2)
         )
 
@@ -118,13 +116,12 @@ class CreditRiskModel:
         print(f"Accuracy: {accuracy}")
         print(f"Classification Report: \n{classification_report(self.y_test, all_preds)}")
         roc = roc_auc_score(self.y_test, all_preds)
-        print(f"ROC AUC Score: {roc}")
         return accuracy, report , roc
 
     def write_output(self):
         self.model.eval()
         test_dataset = CreditRiskDataset(self.X_test, self.y_test)
-        test_loader = DataLoader(test_dataset, batch_size=2, shuffle=False)
+        test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False)
         
         all_preds = []
         all_probs = []
@@ -150,8 +147,8 @@ if __name__ == "__main__":
     model = CreditRiskModel('./datasets/Dataset_CreditScoring.xlsx')
     model.load_data()
     model.prepare_data()
-    model.split_data(test_size=0.1, random_state=0)
+    model.split_data(test_size=0.2, random_state=0)
     model.scale_data()
     model.train_model(num_epochs=100, batch_size=64)
-    accuracy, report , roc = model.evaluate_model()
+    accuracy, report = model.evaluate_model()
     model.write_output()

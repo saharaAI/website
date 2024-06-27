@@ -41,7 +41,7 @@ class CreditRiskModel:
             nn.Linear(64, 32),
             nn.ReLU(),
             nn.Linear(32, 32),
-            nn.ReLU(),
+            nn.LeakyReLU(),
             nn.Linear(32, 2)
         )
 
@@ -150,7 +150,7 @@ if __name__ == "__main__":
     model = CreditRiskModel('./datasets/Dataset_CreditScoring.xlsx')
     model.load_data()
     model.prepare_data()
-    model.split_data(test_size=0.1, random_state=0)
+    model.split_data(test_size=0.2, random_state=0)
     model.scale_data()
     model.train_model(num_epochs=100, batch_size=64)
     accuracy, report , roc = model.evaluate_model()

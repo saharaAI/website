@@ -6,7 +6,7 @@ import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader, WeightedRandomSampler
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_auc_score
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import joblib
 
 class CreditRiskDataset(Dataset):
@@ -39,8 +39,6 @@ class CreditRiskModel:
             nn.Linear(28, 64),
             nn.ReLU(),
             nn.Linear(64, 32),
-            nn.ReLU(),
-            nn.Linear(32, 32),
             nn.ReLU(),
             nn.Linear(32, 2)
         )
@@ -117,14 +115,13 @@ class CreditRiskModel:
         print(confusion_matrix(self.y_test, all_preds))
         print(f"Accuracy: {accuracy}")
         print(f"Classification Report: \n{classification_report(self.y_test, all_preds)}")
-        roc = roc_auc_score(self.y_test, all_preds)
-        print(f"ROC AUC Score: {roc}")
-        return accuracy, report , roc
+        
+        return accuracy, report
 
     def write_output(self):
         self.model.eval()
         test_dataset = CreditRiskDataset(self.X_test, self.y_test)
-        test_loader = DataLoader(test_dataset, batch_size=2, shuffle=False)
+        test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False)
         
         all_preds = []
         all_probs = []
@@ -150,8 +147,8 @@ if __name__ == "__main__":
     model = CreditRiskModel('./datasets/Dataset_CreditScoring.xlsx')
     model.load_data()
     model.prepare_data()
-    model.split_data(test_size=0.1, random_state=0)
+    model.split_data(test_size=0.2, random_state=0)
     model.scale_data()
     model.train_model(num_epochs=100, batch_size=64)
-    accuracy, report , roc = model.evaluate_model()
+    accuracy, report = model.evaluate_model()
     model.write_output()
