@@ -1,3 +1,5 @@
+
+
 from typing import Dict, Optional 
 from fastapi import FastAPI, HTTPException, UploadFile, File, Depends,status
 from pydantic import BaseModel
@@ -101,10 +103,7 @@ app = FastAPI(
     description="An API for credit risk analysis using Google Gemini.",
     version="0.1.0"
 )
-origins = [
-    "http://localhost:3000",
-    "localhost:3000"
-]
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -162,4 +161,3 @@ async def upload_and_analyze(file: UploadFile = File(...), prompt_number: int = 
         raise e
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
