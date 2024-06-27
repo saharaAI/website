@@ -80,20 +80,15 @@ class CreditRiskModel:
         joblib.dump(self.scaler, './Normalisation_CreditScoring')
         print("Data scaled and scaler saved")
 
-    def _get_sampler(self, labels):  # Pass labels of the current fold
-        class_sample_count = np.array([len(np.where(labels == t)[0]) for t in np.unique(labels)])
+     def _get_sampler(self, data_len):  # Add data_len as argument
+        class_sample_count = np.array([len(np.where(self.y_train == t)[0]) for t in np.unique(self.y_train)])
         weight = 1. / class_sample_count
-        samples_weight = np.array([weight[t] for t in labels])
+        samples_weight = np.array([weight[t] for t in self.y_train])
 
         samples_weight = torch.from_numpy(samples_weight)
-        sampler = WeightedRandomSampler(samples_weight.type('torch.DoubleTensor'), len(samples_weight))
-        return sampler
+        samples_weighter = WeightedRandomSampler(samples_weight.type('torch.DoubleTensor'), data_len)  # Use data_len
 
-    def train_model(self, num_epochs=20, batch_size=64, k_folds=5):
-        if self.model_type == 'neural_network':
-            self._train_neural_network(num_epochs, batch_size, k_folds)
-        else:
-            self._train_traditional_model(k_folds)
+        return samples_weighter
 
     def _train_neural_network(self, num_epochs, batch_size, k_folds):
         kfold = StratifiedKFold(n_splits=k_folds, shuffle=True, random_state=42)
@@ -105,12 +100,30 @@ class CreditRiskModel:
             X_val_fold, y_val_fold = self.X_train[val_idx], self.y_train[val_idx]
 
             train_dataset = CreditRiskDataset(X_train_fold, y_train_fold)
-
-            # Create sampler here, inside the loop, and pass fold labels
-            sampler = self._get_sampler(y_train_fold)  
+            
+            # Create sampler here, inside the loop
+            sampler = self._get_sampler(len(train_dataset)) # Pass the length of the fold data
 
             train_loader = DataLoader(train_dataset, batch_size=batch_size, sampler=sampler)
+    def train_model(self, num_epochs=20, batch_size=64, k_folds=5):
+        if self.model_type == 'neural_network':
+            self._train_neural_network(num_epochs, batch_size, k_folds)
+        else:
+            self._train_traditional_model(k_folds)
 
+    def _train_neural_network(self, num_epochs, batch_size, k_folds):
+        kfold = StratifiedKFold(n_splits=k_folds, shuffle=True, random_state=42)
+        
+        for fold, (train_idx, val_idx) in enumerate(kfold.split(self.X_train, self.y_train)):
+            print(f"Fold {fold + 1}/{k_folds}")
+
+            X_train_fold, y_train_fold = self.X_train[train_idx], self.y_train[train_idx]
+            X_val_fold, y_val_fold = self.X_train[val_idx], self.y_train[val_idx]
+
+            train_dataset = CreditRiskDataset(X_train_fold, y_train_fold)
+            sampler = self._get_sampler()
+            train_loader = DataLoader(train_dataset, batch_size=batch_size, sampler=sampler)
+            
             val_dataset = CreditRiskDataset(X_val_fold, y_val_fold)
             val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 
@@ -124,8 +137,8 @@ class CreditRiskModel:
                     loss.backward()
                     self.optimizer.step()
                     epoch_loss += loss.item()
-
-                print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {epoch_loss / len(train_loader)}")
+                
+                print(f"Epoch {epoch+1}/{num_epochs}, Loss: {epoch_loss/len(train_loader)}")
 
                 # Validation loop
                 self.model.eval()
@@ -140,7 +153,7 @@ class CreditRiskModel:
 
             torch.save(self.model.state_dict(), f'./CreditRiskModel_{self.model_type}_fold_{fold + 1}.pth')
             print(f"Model for fold {fold + 1} saved as CreditRiskModel_{self.model_type}_fold_{fold + 1}.pth")
-
+        
     def _train_traditional_model(self, k_folds=5):
         kfold = StratifiedKFold(n_splits=k_folds, shuffle=True, random_state=42)
         

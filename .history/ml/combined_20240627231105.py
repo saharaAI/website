@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader, WeightedRandomSampler
-from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_auc_score
 from sklearn.linear_model import LogisticRegression
@@ -47,31 +47,32 @@ class CreditRiskModel:
         else:
             raise ValueError("Unsupported model type. Choose 'neural_network', 'logistic_regression', 'lightgbm', or 'xgboost'.")
 
-    def _build_neural_network(self, hidden_layers=[64, 32, 32]):
-        layers = []
-        input_size = 28  # Assuming 28 features after preprocessing
-        for hidden_size in hidden_layers:
-            layers.append(nn.Linear(input_size, hidden_size))
-            layers.append(nn.ReLU())
-            input_size = hidden_size
-        layers.append(nn.Linear(input_size, 2))  # Binary classification
-        return nn.Sequential(*layers)
+    def _build_neural_network(self):
+        return nn.Sequential(
+            nn.Linear(28, 64),
+            nn.ReLU(),
+            nn.Linear(64, 32),
+            nn.ReLU(),
+            nn.Linear(32, 32),
+            nn.ReLU(),
+            nn.Linear(32, 2)
+        )
 
     def load_data(self):
         self.dataset = pd.read_excel(self.path)
         print(f"Data loaded with shape: {self.dataset.shape}")
 
     def prepare_data(self):
+        # Dropping customer ID column from the dataset
         self.dataset = self.dataset.drop('ID', axis=1)
+        # Filling missing values with mean
         self.dataset = self.dataset.fillna(self.dataset.mean())
         print(f"Missing values handled. Data shape: {self.dataset.shape}")
 
     def split_data(self, test_size=0.3, random_state=0):
         y = self.dataset.iloc[:, 0].values
         X = self.dataset.iloc[:, 1:29].values
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
-            X, y, test_size=test_size, random_state=random_state, stratify=y
-        )
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=test_size, random_state=random_state, stratify=y)
         print("Data split into train and test sets")
 
     def scale_data(self):
@@ -80,40 +81,22 @@ class CreditRiskModel:
         joblib.dump(self.scaler, './Normalisation_CreditScoring')
         print("Data scaled and scaler saved")
 
-    def _get_sampler(self, labels):  # Pass labels of the current fold
-        class_sample_count = np.array([len(np.where(labels == t)[0]) for t in np.unique(labels)])
+    def _get_sampler(self):
+        class_sample_count = np.array([len(np.where(self.y_train == t)[0]) for t in np.unique(self.y_train)])
         weight = 1. / class_sample_count
-        samples_weight = np.array([weight[t] for t in labels])
+        samples_weight = np.array([weight[t] for t in self.y_train])
 
         samples_weight = torch.from_numpy(samples_weight)
-        sampler = WeightedRandomSampler(samples_weight.type('torch.DoubleTensor'), len(samples_weight))
-        return sampler
+        samples_weighter = WeightedRandomSampler(samples_weight.type('torch.DoubleTensor'), len(samples_weight))
 
-    def train_model(self, num_epochs=20, batch_size=64, k_folds=5):
+        return samples_weighter
+
+    def train_model(self, num_epochs=20, batch_size=64):
         if self.model_type == 'neural_network':
-            self._train_neural_network(num_epochs, batch_size, k_folds)
-        else:
-            self._train_traditional_model(k_folds)
-
-    def _train_neural_network(self, num_epochs, batch_size, k_folds):
-        kfold = StratifiedKFold(n_splits=k_folds, shuffle=True, random_state=42)
-
-        for fold, (train_idx, val_idx) in enumerate(kfold.split(self.X_train, self.y_train)):
-            print(f"Fold {fold + 1}/{k_folds}")
-
-            X_train_fold, y_train_fold = self.X_train[train_idx], self.y_train[train_idx]
-            X_val_fold, y_val_fold = self.X_train[val_idx], self.y_train[val_idx]
-
-            train_dataset = CreditRiskDataset(X_train_fold, y_train_fold)
-
-            # Create sampler here, inside the loop, and pass fold labels
-            sampler = self._get_sampler(y_train_fold)  
-
+            train_dataset = CreditRiskDataset(self.X_train, self.y_train)
+            sampler = self._get_sampler()
             train_loader = DataLoader(train_dataset, batch_size=batch_size, sampler=sampler)
-
-            val_dataset = CreditRiskDataset(X_val_fold, y_val_fold)
-            val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
-
+            
             self.model.train()
             for epoch in range(num_epochs):
                 epoch_loss = 0
@@ -124,41 +107,15 @@ class CreditRiskModel:
                     loss.backward()
                     self.optimizer.step()
                     epoch_loss += loss.item()
-
-                print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {epoch_loss / len(train_loader)}")
-
-                # Validation loop
-                self.model.eval()
-                val_preds = []
-                with torch.no_grad():
-                    for X_batch, _ in val_loader:
-                        outputs = self.model(X_batch)
-                        _, preds = torch.max(outputs, 1)
-                        val_preds.extend(preds.numpy())
-                val_accuracy = accuracy_score(y_val_fold, val_preds)
-                print(f"Validation Accuracy: {val_accuracy}")
-
-            torch.save(self.model.state_dict(), f'./CreditRiskModel_{self.model_type}_fold_{fold + 1}.pth')
-            print(f"Model for fold {fold + 1} saved as CreditRiskModel_{self.model_type}_fold_{fold + 1}.pth")
-
-    def _train_traditional_model(self, k_folds=5):
-        kfold = StratifiedKFold(n_splits=k_folds, shuffle=True, random_state=42)
-        
-        for fold, (train_idx, val_idx) in enumerate(kfold.split(self.X_train, self.y_train)):
-            print(f"Fold {fold + 1}/{k_folds}")
-
-            X_train_fold, y_train_fold = self.X_train[train_idx], self.y_train[train_idx]
-            X_val_fold, y_val_fold = self.X_train[val_idx], self.y_train[val_idx]
+                
+                print(f"Epoch {epoch+1}/{num_epochs}, Loss: {epoch_loss/len(train_loader)}")
             
-            self.model.fit(X_train_fold, y_train_fold)
-
-            # Validation loop
-            val_preds = self.model.predict(X_val_fold)
-            val_accuracy = accuracy_score(y_val_fold, val_preds)
-            print(f"Validation Accuracy: {val_accuracy}")
-
-            joblib.dump(self.model, f'./Classifier_CreditScoring_{self.model_type}_fold_{fold + 1}')
-            print(f"Model for fold {fold + 1} saved as Classifier_CreditScoring_{self.model_type}_fold_{fold + 1}")
+            torch.save(self.model.state_dict(), f'./CreditRiskModel_{self.model_type}.pth')
+            print(f"Model trained and saved as CreditRiskModel_{self.model_type}.pth")
+        else:
+            self.model.fit(self.X_train, self.y_train)
+            joblib.dump(self.model, f'./Classifier_CreditScoring_{self.model_type}')
+            print(f"Model trained and saved as Classifier_CreditScoring_{self.model_type}")
 
     def evaluate_model(self):
         if self.model_type == 'neural_network':
@@ -183,6 +140,7 @@ class CreditRiskModel:
         print(f"Accuracy: {accuracy}")
         print(f"Classification Report: \n{classification_report(self.y_test, y_pred)}")
 
+        #if self.model_type == 'neural_network':
         roc = roc_auc_score(self.y_test, y_pred)
         print(f"ROC AUC Score: {roc}")
         return accuracy, report, roc
@@ -245,7 +203,7 @@ if __name__ == "__main__":
         model.prepare_data()
         model.split_data()
         model.scale_data()
-        model.train_model(num_epochs=100, batch_size=64, k_folds=5)  # Adjust as needed
+        model.train_model(num_epochs=100, batch_size=64)
         accuracy, report, roc = model.evaluate_model()
         result = {
             'Model': model_type,
