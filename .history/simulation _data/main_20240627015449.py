@@ -63,9 +63,9 @@ class CreditDataGenerator:
         self.X = np.column_stack((self.x1, self.x2, self.x3, self.x4, self.x5,
                              x6_encoded, x7_encoded, x8_encoded,
                              x10_encoded, x11_encoded, x12_encoded))
-
-        self.alpha = np.exp(- np.random.uniform(0, self.default_percent, size=20))
-        
+        # 20 number of alpha
+        r = self.default_percent *20/50 * 1 ## parameter to be tuned !!! 
+        self.alpha = np.exp(- np.random.uniform(0, r, size=20))
         y = self.simulate_y(self.X, self.alpha)
         
         # Compute percentages of class 0 and 1
@@ -93,7 +93,7 @@ class CreditDataGenerator:
 
 # Example usage:
 if __name__ == "__main__":
-    generator = CreditDataGenerator(num_samples=1000, default_percent=30)  # Adjust default_percent as desired : ca marche pas ! 
+    generator = CreditDataGenerator(num_samples=1000, default_percent=50)  # Adjust default_percent as desired : ca marche pas ! 
     data, class_0_percent, class_1_percent = generator.generate_data()
     print("X shape:", generator.X.shape)
     print("Alpha:", generator.alpha)

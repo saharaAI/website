@@ -65,7 +65,6 @@ class CreditDataGenerator:
                              x10_encoded, x11_encoded, x12_encoded))
 
         self.alpha = np.exp(- np.random.uniform(0, self.default_percent, size=20))
-        
         y = self.simulate_y(self.X, self.alpha)
         
         # Compute percentages of class 0 and 1
