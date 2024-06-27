@@ -202,12 +202,7 @@ if st.sidebar.checkbox("Run Benchmark ..."):
             'Accuracy': accuracy,
             'Precision (Class 1)': report['1']['precision'],
             'Recall (Class 1)': report['1']['recall'],
-            'F1-Score (Class 1)': report['1']['f1-score'],
-            'Support (Class 1)': report['1']['support'] ,
-            'Precision (Class 0)': report['0']['precision'],
-            'Recall (Class 0)': report['0']['recall'],
-            'F1-Score (Class 0)': report['0']['f1-score'],
-            'Support (Class 0)': report['0']['support']
+            'F1-Score (Class 1)': report['1']['f1-score']
         }
         benchmark_results.append(result)
 
