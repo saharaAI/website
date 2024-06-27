@@ -12,6 +12,7 @@ import lightgbm as lgb
 import xgboost as xgb
 import joblib
 import openpyxl
+from sklearn.impute import SimpleImputer  # For handling missing values
 from imblearn.over_sampling import SMOTE, ADASYN, BorderlineSMOTE
 
 class CreditRiskModel:
@@ -42,12 +43,19 @@ class CreditRiskModel:
         self.dataset = pd.read_excel(self.path)
         print(f"Data loaded with shape: {self.dataset.shape}")
 
-    def prepare_data(self):
+    def prepare_data(self, strategy='mean'):
         # Dropping customer ID column from the dataset
         self.dataset = self.dataset.drop('ID', axis=1)
-        # Filling missing values with mean
-        self.dataset = self.dataset.fillna(self.dataset.mean())
-        print(f"Missing values handled. Data shape: {self.dataset.shape}")
+        
+        # Handling missing values
+        if strategy == 'mean':
+            self.dataset = self.dataset.fillna(self.dataset.mean())
+        elif strategy == 'median':
+            self.dataset = self.dataset.fillna(self.dataset.median())
+        elif strategy == 'mode':
+            self.dataset = self.dataset.fillna(self.dataset.mode().iloc[0])  # Replace with mode
+        
+        print(f"Missing values handled using {strategy}. Data shape: {self.dataset.shape}")
 
     def split_data(self, test_size=0.3, random_state=0):
         y = self.dataset.iloc[:, 0].values
@@ -96,6 +104,11 @@ class CreditRiskModel:
             grid_search = GridSearchCV(self.classifier, param_grid, cv=5)
             grid_search.fit(self.X_train, self.y_train)
             self.classifier = grid_search.best_estimator_
+        elif self.model_type == 'decision_tree':
+            param_grid = {'max_depth': [None, 10, 20, 30]}
+            grid_search = GridSearchCV(self.classifier, param_grid, cv=5)
+            grid_search.fit(self.X_train, self.y_train)
+            self.classifier = grid_search.best_estimator_
         print(f"Hyperparameters tuned for {self.model_type}")
 
     def train_model(self):
@@ -132,6 +145,7 @@ def save_benchmark_results(results, output_path='Benchmark_Results.json'):
 if __name__ == "__main__":
     model_types = ['logistic_regression', 'lightgbm', 'xgboost', 'random_forest', 'decision_tree']
     resampling_techniques = ['smote', 'adasyn', 'borderline_smote']
+    missing_strategy = ['mean', 'median', 'mode']
     benchmark_results = []
 
     # Get the current working directory
@@ -140,33 +154,36 @@ if __name__ == "__main__":
     # Construct the absolute path to the dataset
     dataset_path = os.path.join(current_dir, '..', 'datasets', 'Dataset_CreditScoring.xlsx')
 
-    for resampling_technique in resampling_techniques:
-        print(f"Using resampling technique: {resampling_technique}")
-        for model_type in model_types:
-            print(f"Testing model: {model_type} with {resampling_technique}")
-            model = CreditRiskModel(dataset_path, model_type=model_type)
-            model.load_data()
-            model.prepare_data()
-            model.split_data()
-            
-            if resampling_technique == 'smote':
-                model.apply_smote()
-            elif resampling_technique == 'adasyn':
-                model.apply_adasyn()
-            elif resampling_technique == 'borderline_smote':
-                model.apply_borderline_smote()
-            
-            model.scale_data()
-            model.hyperparameter_tuning()
-            model.train_model()
-            accuracy, report = model.evaluate_model()
+    for strategy in missing_strategy:
+        print(f"Handling missing values using strategy: {strategy}")
+        for resampling_technique in resampling_techniques:
+            print(f"Using resampling technique: {resampling_technique}")
+            for model_type in model_types:
+                print(f"Testing model: {model_type} with {resampling_technique} and {strategy}")
+                model = CreditRiskModel(dataset_path, model_type=model_type)
+                model.load_data()
+                model.prepare_data(strategy=strategy)
+                model.split_data()
+                
+                if resampling_technique == 'smote':
+                    model.apply_smote()
+                elif resampling_technique == 'adasyn':
+                    model.apply_adasyn()
+                elif resampling_technique == 'borderline_smote':
+                    model.apply_borderline_smote()
+                
+                model.scale_data()
+                model.hyperparameter_tuning()
+                model.train_model()
+                accuracy, report = model.evaluate_model()
 
-            result = {
-                'Model': model_type,
-                'Resampling Technique': resampling_technique,
-                'Accuracy': accuracy,
-                'Report': report
-            }
-            benchmark_results.append(result)
+                result = {
+                    'Model': model_type,
+                    'Resampling Technique': resampling_technique,
+                    'Missing Strategy': strategy,
+                    'Accuracy': accuracy,
+                    'Report': report
+                }
+                benchmark_results.append(result)
 
     save_benchmark_results(benchmark_results)
