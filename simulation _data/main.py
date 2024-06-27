@@ -40,12 +40,9 @@ class CreditDataGenerator:
     
     def simulate_y(self, X, alpha=None):
         pr = self.ground_truth_pr(X, alpha)
-        
-        # Compute the probability threshold to achieve desired default percentage
-        threshold = np.percentile(pr, 100 - self.default_percent)
-        
+    
         # Classify y based on the threshold
-        y = np.where(pr >= threshold, 1, 0)
+        y = np.where(pr >= 0.5, 1, 0)
         
         return y
     
