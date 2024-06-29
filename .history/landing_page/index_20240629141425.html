@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sahara Analytics - Solutions de Gestion du Risque de Crédit</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* GENERAL */
         body {
@@ -12,7 +11,6 @@
             margin: 0;
             padding: 0;
             color: #333;
-            background-color: #f5f5f5;
         }
         a {
             text-decoration: none;
@@ -28,90 +26,69 @@
             color: #fff;
             border-radius: 5px;
             transition: background-color 0.3s;
-            font-weight: bold;
         }
         .btn:hover {
             background-color: #0056b3; /* Darker blue */
         }
         /* HEADER */
         header {
-            background-color: #343a40;
-            color: #fff;
+            background-color: #f8f9fa; /* Light grey */
             padding: 20px 0;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-        header h2 {
-            margin: 10px 0 0;
-            font-size: 1.2em;
-            font-weight: 300;
         }
         /* HERO SECTION */
         .hero {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 60px 20px;
-            background-color: #ffffff;
+            padding: 40px 0;
         }
         .hero-image {
-            flex: 1;
+            width: 50%;
             margin-right: 40px;
         }
         .hero-image img {
             width: 100%;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         .hero-text {
-            flex: 1;
+            width: 50%;
         }
         .hero-text p {
             font-size: 1.2em;
             line-height: 1.6;
-            margin-bottom: 20px;
         }
         /* SERVICES SECTION */
         .services {
             text-align: center;
-            padding: 60px 20px;
-            background-color: #f8f9fa; /* Light grey */
+            padding: 40px 0;
         }
         .services h2 {
             margin-bottom: 40px;
-            font-size: 2em;
         }
         .services .service {
             display: inline-block;
             width: 30%;
             margin: 0 1.5%;
             padding: 20px;
-            background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 10px;
             text-align: left;
             vertical-align: top;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        .services .service img {
+        .services img {
             width: 80px;
             height: 80px;
             margin-bottom: 20px;
-            border-radius: 50%;
         }
         /* BENEFITS SECTION */
         .benefits {
             text-align: center;
-            padding: 60px 20px;
-            background-color: #ffffff;
+            padding: 40px 0;
+            background-color: #f8f9fa; /* Light grey */
         }
         .benefits h2 {
             margin-bottom: 40px;
-            font-size: 2em;
         }
         .benefits ul {
             list-style: none;
@@ -124,31 +101,18 @@
         .benefits li {
             margin: 10px 20px;
             font-size: 1.1em;
-            flex: 1 1 calc(20% - 40px);
-            max-width: calc(20% - 40px);
         }
         /* CALL TO ACTION */
         .cta {
             text-align: center;
-            padding: 60px 20px;
-            background-color: #007bff;
-            color: #fff;
-        }
-        .cta h2 {
-            margin-bottom: 20px;
-            font-size: 2em;
-        }
-        .cta p {
-            font-size: 1.2em;
-            margin-bottom: 20px;
+            padding: 40px 0;
         }
         /* FOOTER */
         footer {
-            background-color: #343a40;
+            background-color: #333;
             color: #fff;
             text-align: center;
             padding: 20px 0;
-            font-size: 0.9em;
         }
     </style>
 </head>
@@ -161,7 +125,7 @@
 
     <section class="hero">
         <div class="hero-image">
-            <img src="images/hero.png" alt="Analyse de données"> 
+            <img src="images/hero.jpg" alt="Analyse de données"> 
         </div>
         <div class="hero-text">
             <p>Prenez des décisions éclairées et protégez votre institution financière des risques financiers grâce à nos solutions de gestion du risque de crédit basées sur l'IA.</p>
@@ -177,12 +141,12 @@
             <p>Évaluez la solvabilité des clients avec précision et rapidité grâce à nos modèles de Machine Learning.</p>
         </div>
         <div class="service">
-            <img src="images/fraud.jpg" alt="Détection de la fraude"> 
+            <img src="images/fraude.svg" alt="Détection de la fraude"> 
             <h3>Détection de la Fraude</h3>
             <p>Identifiez et prévenez les activités frauduleuses en temps réel grâce à des algorithmes d'IA avancés.</p>
         </div>
         <div class="service">
-            <img src="images/portfolio.jpeg" alt="Gestion de portefeuille"> 
+            <img src="images/portfolio.svg" alt="Gestion de portefeuille"> 
             <h3>Gestion de Portefeuille</h3>
             <p>Surveillez la santé de vos portefeuilles de crédit et anticipez les risques potentiels.</p>
         </div>
