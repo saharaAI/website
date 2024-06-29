@@ -56,8 +56,8 @@ class CreditDataGenerator:
                                   x10_encoded, x11_encoded, x12_encoded))
         
         num_features = self.X.shape[1]
-        #self.alpha = np.exp(- np.random.uniform(0, self.default_percent, size=num_features)) / (1 + np.exp(- np.random.uniform(0, self.default_percent, size=num_features)))
-        self.alpha = np.array([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,0.1,0.1,0.1,0.1])
+        self.alpha = np.exp(- np.random.uniform(0, self.default_percent, size=num_features)* 0.01)
+        
         y, pr = self.simulate_y(self.X, self.alpha)
         
         class_0_percent = np.mean(y == 0) * 100

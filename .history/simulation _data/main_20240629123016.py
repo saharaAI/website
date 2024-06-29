@@ -5,7 +5,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 class CreditDataGenerator:
-    def __init__(self, num_samples=1000, default_percent=50):
+    def __init__(self, num_samples=1000, default_percent=20):
         self.num_samples = num_samples
         self.default_percent = default_percent
         
@@ -39,7 +39,7 @@ class CreditDataGenerator:
     
     def simulate_y(self, X, alpha=None):
         pr = self.ground_truth_pr(X, alpha)
-        y = np.random.binomial(1, pr)
+        y = np.random.choice([0, 1], size=pr.shape, p=[1 - self.default_percent / 100, self.default_percent / 100])
         return y, pr
     
     def generate_data(self):
@@ -56,8 +56,8 @@ class CreditDataGenerator:
                                   x10_encoded, x11_encoded, x12_encoded))
         
         num_features = self.X.shape[1]
-        #self.alpha = np.exp(- np.random.uniform(0, self.default_percent, size=num_features)) / (1 + np.exp(- np.random.uniform(0, self.default_percent, size=num_features)))
-        self.alpha = np.array([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,0.1,0.1,0.1,0.1])
+        self.alpha = np.exp(- np.random.uniform(0, self.default_percent, size=num_features))
+        
         y, pr = self.simulate_y(self.X, self.alpha)
         
         class_0_percent = np.mean(y == 0) * 100
@@ -85,7 +85,7 @@ class CreditDataGenerator:
 
 # Example usage:
 if __name__ == "__main__":
-    generator = CreditDataGenerator(num_samples=1000, default_percent=50)
+    generator = CreditDataGenerator(num_samples=1000, default_percent=30)
     data, class_0_percent, class_1_percent = generator.generate_data()
     print("X shape:", generator.X.shape)
     print("Alpha:", generator.alpha)

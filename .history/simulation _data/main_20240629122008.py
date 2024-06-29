@@ -3,9 +3,8 @@ import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 import warnings
 warnings.filterwarnings('ignore')
-
 class CreditDataGenerator:
-    def __init__(self, num_samples=1000, default_percent=50):
+    def __init__(self, num_samples=1000, default_percent=20):
         self.num_samples = num_samples
         self.default_percent = default_percent
         
@@ -30,20 +29,26 @@ class CreditDataGenerator:
                                     p=[0.4, 0.3, 0.2, 0.1])  # Number of dependents
     
     def sigmoid(self, x):
-        return 1 / (1 + np.exp(-x))
+        # Sparse sigmoid to avoid overflow and underflow
+        return np.where(x >= 0, 1 / (1 + np.exp(-x)), np.exp(x) / (1 + np.exp(x)))
     
     def ground_truth_pr(self, X, alpha=None):
         if alpha is None:
-            alpha = np.random.rand(X.shape[1])
+            alpha = np.random.rand(X.shape[1])  # Generate random alpha if not provided
+        
         return self.sigmoid(np.dot(X, alpha))
     
     def simulate_y(self, X, alpha=None):
         pr = self.ground_truth_pr(X, alpha)
-        y = np.random.binomial(1, pr)
-        return y, pr
+    
+        # Classify y based on the threshold
+        y = np.where(pr >= 0.5, 1, 0)
+        
+        return y
     
     def generate_data(self):
-        enc = OneHotEncoder(drop='first', sparse_output=False)
+        # One-hot encoding categorical variables
+        enc = OneHotEncoder(drop='first')
         x6_encoded = enc.fit_transform(self.x6.reshape(-1, 1))
         x7_encoded = enc.fit_transform(self.x7.reshape(-1, 1))
         x8_encoded = enc.fit_transform(self.x8.reshape(-1, 1))
@@ -51,18 +56,20 @@ class CreditDataGenerator:
         x11_encoded = enc.fit_transform(self.x11.reshape(-1, 1))
         x12_encoded = enc.fit_transform(self.x12.reshape(-1, 1))
         
+        # Combine all variables into X
         self.X = np.column_stack((self.x1, self.x2, self.x3, self.x4, self.x5,
-                                  x6_encoded, x7_encoded, x8_encoded,
-                                  x10_encoded, x11_encoded, x12_encoded))
+                             x6_encoded, x7_encoded, x8_encoded,
+                             x10_encoded, x11_encoded, x12_encoded))
+
+        self.alpha = np.exp(- np.random.uniform(0, self.default_percent, size=20))
         
-        num_features = self.X.shape[1]
-        #self.alpha = np.exp(- np.random.uniform(0, self.default_percent, size=num_features)) / (1 + np.exp(- np.random.uniform(0, self.default_percent, size=num_features)))
-        self.alpha = np.array([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,0.1,0.1,0.1,0.1])
-        y, pr = self.simulate_y(self.X, self.alpha)
+        y = self.simulate_y(self.X, self.alpha)
         
+        # Compute percentages of class 0 and 1
         class_0_percent = np.mean(y == 0) * 100
         class_1_percent = np.mean(y == 1) * 100
         
+        # Creating a DataFrame
         data = pd.DataFrame({
             'ID': self.ID,
             'x1': self.x1,
@@ -76,16 +83,14 @@ class CreditDataGenerator:
             'x10': self.x10,
             'x11': self.x11,
             'x12': self.x12,
-            'y': y,
+            'y': y
         })
         
-        # add ground truth probabilities
-        data['pr'] = pr
         return data, class_0_percent, class_1_percent
 
 # Example usage:
 if __name__ == "__main__":
-    generator = CreditDataGenerator(num_samples=1000, default_percent=50)
+    generator = CreditDataGenerator(num_samples=1000, default_percent=30)  # Adjust default_percent as desired : ca marche pas ! 
     data, class_0_percent, class_1_percent = generator.generate_data()
     print("X shape:", generator.X.shape)
     print("Alpha:", generator.alpha)
