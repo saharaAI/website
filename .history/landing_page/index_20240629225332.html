@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahara Analytics - Révolutionnez Votre Gestion du Risque de Crédit</title>
+    <meta name="description" content="Sahara Analytics offre des solutions avancées de gestion du risque de crédit, utilisant l'IA et le Machine Learning pour des décisions financières plus intelligentes.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* CSS styles */
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #0056b3;
+            --text-color: #333;
+            --background-color: #f5f5f5;
+            --header-color: #343a40;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--header-color);
+            color: #fff;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(52, 58, 64, 0.9);
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            background-image: url('path/to/hero-image.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+        }
+
+        .hero-content {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 10px;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .services, .benefits, .testimonials, .faq {
+            background-color: #fff;
+        }
+
+        .services-grid, .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .service, .benefit {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .service:hover, .benefit:hover {
+            transform: translateY(-5px);
+        }
+
+        .cta {
+            background-color: var(--primary-color);
+            color: #fff;
+            text-align: center;
+        }
+
+        footer {
+            background-color: var(--header-color);
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .services-grid, .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <nav>
+                <ul>
+                    <li><a href="#home">Accueil</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#benefits">Avantages</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Sahara Analytics</h1>
+                <p>Révolutionnez Votre Gestion du Risque de Crédit</p>
+                <a href="#contact" class="btn">Demander une Démo</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Nos Services</h2>
+            <div class="services-grid">
+                <div class="service">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Analyse Automatisée du Risque</h3>
+                    <p>Évaluez la solvabilité des clients avec précision grâce à nos modèles de Machine Learning.</p>
+                </div>
+                <div class="service">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Détection de la Fraude</h3>
+                    <p>Protégez votre institution contre les activités frauduleuses en temps réel.</p>
+                </div>
+                <div class="service">
+                    <i class="fas fa-chart-pie"></i>
+                    <h3>Gestion de Portefeuille</h3>
+                    <p>Optimisez vos stratégies de prêt et améliorez la rentabilité.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="benefits" class="benefits">
+        <div class="container">
+            <h2>Les Avantages Sahara</h2>
+            <div class="benefits-grid">
+                <div class="benefit">
+                    <i class="fas fa-coins"></i>
+                    <h3>Réduction des Pertes</h3>
+                    <p>Minimisez les pertes sur créances en identifiant proactivement les risques.</p>
+                </div>
+                <div class="benefit">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <h3>Efficacité Opérationnelle</h3>
+                    <p>Automatisez les tâches manuelles pour une meilleure productivité.</p>
+                </div>
+                <div class="benefit">
+                    <i class="fas fa-lock"></i>
+                    <h3>Conformité Renforcée</h3>
+                    <p>Restez en conformité avec les réglementations en constante évolution.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2>Témoignages</h2>
+            <!-- Add testimonials content here -->
+        </div>
+    </section>
+
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2>Questions Fréquentes</h2>
+            <!-- Add FAQ content here -->
+        </div>
+    </section>
+
+    <section id="contact" class="cta">
+        <div class="container">
+            <h2>Prêt à Transformer Votre Gestion du Risque de Crédit ?</h2>
+            <p>Contactez-nous dès aujourd'hui pour une démonstration personnalisée.</p>
+            <form id="contact-form">
+                <input type="email" id="email" placeholder="Votre adresse e-mail" required>
+                <button type="submit" class="btn">Demander une Démo</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Sahara Analytics. Tous Droits Réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for sticky header
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Simple form validation
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            if (email) {
+                alert('Merci pour votre intérêt ! Nous vous contacterons bientôt.');
+                this.reset();
+            } else {
+                alert('Veuillez entrer une adresse e-mail valide.');
+            }
+        });
+    </script>
+</body>
+</html>
