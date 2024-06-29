@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahara Analytics - Solutions de Gestion du Risque de Crédit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* GENERAL */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff; /* Blue */
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff; /* Blue */
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background-color: #0056b3; /* Darker blue */
+        }
+
+        /* HEADER */
+        header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        header h2 {
+            margin: 10px 0 0;
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+            background-color: #ffffff;
+        }
+        .hero-image {
+            flex: 1;
+            margin-right: 40px;
+            text-align: center; /* Center image */
+        }
+        .hero-image img {
+            max-width: 100%; /* Responsive image */
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .hero-text {
+            flex: 1;
+        }
+        .hero-text p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* SERVICES SECTION */
+        .services {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: #f8f9fa; /* Light grey */
+        }
+        .services h2 {
+            margin-bottom: 40px;
+            font-size: 2em;
+        }
+        .services .service {
+            display: inline-block;
+            width: 30%;
+            margin: 0 1.5%;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            text-align: left;
+            vertical-align: top;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s; /* Add transition for hover effect */
+        }
+        .services .service:hover {
+            transform: translateY(-5px); /* Move up slightly on hover */
+        }
+        .services .service img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            border-radius: 50%;
+        }
+
+        /* BENEFITS SECTION */
+        .benefits {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: #ffffff;
+        }
+        .benefits h2 {
+            margin-bottom: 40px;
+            font-size: 2em;
+        }
+        .benefits ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .benefits li {
+            margin: 10px 20px;
+            font-size: 1.1em;
+            flex: 1 1 calc(20% - 40px);
+            max-width: calc(20% - 40px);
+        }
+
+        /* CALL TO ACTION */
+        .cta {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: #007bff;
+            color: #fff;
+        }
+        .cta h2 {
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        .cta p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: #343a40;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.9em;
+        }
+
+        /* FORM */
+        .cta form {
+            display: inline-block;
+        }
+        .cta input[type="email"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+            }
+            .hero-image {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            .services .service {
+                width: 95%; /* Make services take up full width on smaller screens */
+                margin: 2.5% 0; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Sahara Analytics</h1>
+        <h2>Optimisez votre gestion du risque de crédit grâce à l'intelligence artificielle</h2>
+    </header>
+
+    <section class="hero">
+        <div class="hero-image">
+            <img src="images/hero.png" alt="Analyse de données"> 
+        </div>
+        <div class="hero-text">
+            <p>Prenez des décisions éclairées et protégez votre institution financière des risques financiers grâce à nos solutions de gestion du risque de crédit basées sur l'IA.</p>
+            <a href="#contact" class="btn">Contactez-nous</a>
+        </div>
+    </section>
+
+    <section class="services">
+        <h2>Nos Solutions</h2>
+        <div class="service">
+            <img src="images/analyse.png" alt="Analyse de données"> 
+            <h3>Analyse Automatisée du Risque</h3>
+            <p>Évaluez la solvabilité des clients avec précision et rapidité grâce à nos modèles de Machine Learning.</p>
+        </div>
+        <div class="service">
+            <img src="images/fraud.jpg" alt="Détection de la fraude"> 
+            <h3>Détection de la Fraude</h3>
+            <p>Identifiez et prévenez les activités frauduleuses en temps réel grâce à des algorithmes d'IA avancés.</p>
+        </div>
+        <div class="service">
+            <img src="images/portfolio.jpeg" alt="Gestion de portefeuille"> 
+            <h3>Gestion de Portefeuille</h3>
+            <p>Surveillez la santé de vos portefeuilles de crédit et anticipez les risques potentiels.</p>
+        </div>
+    </section>
+
+    <section class="benefits">
+        <h2>Bénéfices</h2>
+        <ul>
+            <li>Réduction des pertes sur créances</li>
+            <li>Amélioration de l'efficacité opérationnelle</li>
+            <li>Prise de décision proactive</li>
+            <li>Conformité réglementaire accrue</li>
+            <li>Expérience client améliorée</li>
+        </ul>
+    </section>
+
+    <section class="cta" id="contact">
+        <h2>Prêt à transformer votre gestion du risque de crédit ?</h2>
+        <p>Laissez-nous vos coordonnées pour une démonstration personnalisée.</p>
+        <form action="/submit" method="post"> 
+            <input type="email" name="email" placeholder="Votre adresse e-mail" required>
+            <button type="submit" class="btn">Envoyer</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>© 2024 Sahara Analytics</p>
+    </footer>
+
+</body>
+</html>

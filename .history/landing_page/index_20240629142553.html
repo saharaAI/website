@@ -13,53 +13,53 @@
             padding: 0;
             color: #333;
             background-color: #f5f5f5;
-            line-height: 1.6; 
+            line-height: 1.6; /* Improve readability */
         }
 
         a {
             text-decoration: none;
-            color: #007bff; 
-            transition: color 0.3s ease; 
+            color: #007bff; /* Blue */
+            transition: color 0.3s ease; /* Smooth color transition on hover */
         }
 
         a:hover {
-            color: #0056b3; 
+            color: #0056b3; /* Darker blue */
         }
 
         .btn {
             display: inline-block;
-            padding: 14px 28px; 
+            padding: 14px 28px; /* Adjusted padding */
             background-color: #007bff; 
             color: #fff;
             border-radius: 5px;
             transition: background-color 0.3s ease; 
-            font-weight: 600; 
-            border: none;
+            font-weight: 600; /* Slightly bolder */
+            border: none; /* Remove default button border */
         }
 
         .btn:hover {
             background-color: #0056b3;
-            cursor: pointer;
+            cursor: pointer; /* Add pointer cursor on hover */
         }
 
         /* HEADER */
         header {
             background-color: #343a40;
             color: #fff;
-            padding: 30px 0; 
+            padding: 30px 0; /* Increased padding */
             text-align: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         header h1 {
             margin: 0;
-            font-size: 3em; 
+            font-size: 3em; /* Larger heading */
             font-weight: 600;
         }
 
         header h2 {
-            margin: 15px 0 0; 
-            font-size: 1.4em; 
+            margin: 15px 0 0; /* Adjusted margin */
+            font-size: 1.4em; /* Increased font size */
             font-weight: 300;
         }
 
@@ -68,7 +68,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 80px 20px; 
+            padding: 80px 20px; /* Increased padding */
             background-color: #ffffff;
         }
 
@@ -89,33 +89,33 @@
             flex: 1;
         }
 
-        .hero-text h3 {
+        .hero-text h3 { /* Added a heading for better structure */
             font-size: 2em;
             margin-bottom: 20px;
             font-weight: 600;
         }
 
         .hero-text p {
-            font-size: 1.3em; 
-            margin-bottom: 30px; 
+            font-size: 1.3em; /* Increased font size */
+            margin-bottom: 30px; /* Increased margin */
         }
 
         /* SERVICES SECTION */
         .services {
             text-align: center;
-            padding: 80px 20px; 
+            padding: 80px 20px; /* Increased padding */
             background-color: #f8f9fa;
         }
 
         .services h2 {
-            margin-bottom: 60px; 
-            font-size: 2.5em; 
+            margin-bottom: 60px; /* Increased margin */
+            font-size: 2.5em; /* Increased font size */
             font-weight: 600; 
         }
 
-        .services-grid {
+        .services-grid { /* Use grid for better layout control */
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
             grid-gap: 30px;
         }
 
@@ -159,14 +159,14 @@
             font-weight: 600;
         }
 
-        .benefits-grid {
+        .benefits-grid { /* Use grid for benefits layout */
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
             grid-gap: 30px;
         }
 
         .benefit {
-            text-align: left; 
+            text-align: left; /* Align text to the left */
         }
 
         .benefit i {
@@ -175,7 +175,7 @@
             margin-bottom: 15px;
         }
 
-        .benefit h4 { 
+        .benefit h4 { /* Use h4 for benefit titles */
             font-size: 1.3em;
             margin-bottom: 10px;
             font-weight: 600;
@@ -209,37 +209,7 @@
             border-radius: 5px;
             border: 1px solid #ccc;
             margin-right: 15px; 
-            width: 300px; 
-        }
-        
-        /* CUSTOM SECTION FOR BPM & GBM */
-        .custom-section {
-            padding: 80px 20px;
-            background-color: #f0f5f8; /* Light blue-grey */
-        }
-
-        .custom-section h2 {
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 2.5em;
-            font-weight: 600;
-        }
-
-        .custom-content {
-            display: flex;
-            flex-wrap: wrap; 
-            justify-content: space-around;
-            align-items: center;
-        }
-
-        .custom-text {
-            flex: 1 1 400px; /* Adjust flex values as needed */
-            margin: 20px;
-        }
-
-        .custom-text ul {
-            list-style-type: disc;
-            padding-left: 40px; /* Indent list items */
+            width: 300px; /* Set a specific width */
         }
 
         /* FOOTER */
@@ -254,7 +224,7 @@
         /* Media Queries for Responsiveness */
         @media (max-width: 768px) {
             header h1 {
-                font-size: 2.5em; 
+                font-size: 2.5em; /* Adjust heading size for smaller screens */
             }
 
             .hero {
@@ -264,15 +234,6 @@
             .hero-image {
                 margin-right: 0;
                 margin-bottom: 30px;
-            }
-
-            .custom-content {
-                flex-direction: column; /* Stack elements vertically */
-            }
-
-            .custom-text {
-                flex: 1 1 100%; /* Take full width on small screens */
-                margin: 20px 0; /* Reset margin for better spacing */
             }
         }
     </style>
@@ -315,57 +276,6 @@
             </div>
         </div>
     </section>
-
-
-    <!-- Section spécifique à la BPM -->
-    <section class="custom-section">
-        <h2>Proposition de Valeur pour la BPM</h2>
-
-        <div class="custom-content">
-
-            <div class="custom-text">
-                <h3>Comprendre vos besoins</h3>
-                <p>La Banque Populaire de Mauritanie (BPM) dessert une clientèle diversifiée, des particuliers aux entreprises, avec un éventail de produits financiers. Cette activité implique des risques de crédit spécifiques que Sahara Analytics peut aider à gérer efficacement.</p>
-            </div>
-
-            <div class="custom-text">
-                <h3>Solutions sur mesure</h3>
-                <ul>
-                    <li>Évaluation automatisée du risque pour accélérer les décisions de prêt.</li>
-                    <li>Détection de la fraude en temps réel pour protéger les transactions de la BPM.</li>
-                    <li>Tableaux de bord intuitifs pour une surveillance proactive des portefeuilles de crédit.</li>
-                    <li>Solutions conformes aux réglementations pour une tranquillité d'esprit.</li>
-                </ul>
-            </div>
-
-        </div>
-    </section>
-    
-
-        <!-- Section spécifique à la GBM -->
-        <section class="custom-section">
-            <h2>Proposition de Valeur pour la GBM</h2>
-    
-            <div class="custom-content">
-    
-                <div class="custom-text">
-                    <h3>Répondre aux exigences de la GBM</h3>
-                    <p>La Générale de Banque de Mauritanie (GBM) propose des financements diversifiés, couvrant l'investissement et l'exploitation. Sahara Analytics comprend les risques associés à ces offres et propose des solutions adaptées.</p>
-                </div>
-    
-                <div class="custom-text">
-                    <h3>Solutions ciblées pour la GBM</h3>
-                    <ul>
-                        <li>Automatisation de l'analyse des documents pour une évaluation rapide du risque.</li>
-                        <li>Modélisation prédictive pour anticiper les défauts de paiement.</li>
-                        <li>Surveillance en temps réel des portefeuilles pour une gestion proactive.</li>
-                        <li>Simulation de scénarios pour tester la résilience face aux fluctuations économiques.</li>
-                    </ul>
-                </div>
-    
-            </div>
-        </section>
-    
 
     <section class="benefits">
         <h2>Les Avantages Sahara</h2>
