@@ -16,7 +16,8 @@ import zipfile
 import io
 
 # Set environment variables for API keys
-st.set_page_config(layout='wide', page_title='AI Task Orchestrator', page_icon='🤖')
+# icone ; comme 📄
+st.set_page_config(layout='wide', page_title='AI Task Orchestrator', page_icon='📄')
 # Cacher les éléments de Streamlit
 hide_st_style = """
 <style>
@@ -165,7 +166,7 @@ def create_folders_and_files_recursive(zip_file, current_path, structure, code_b
                 st.warning(f"Code content not found for file: {key}")
 
 def main():
-    st.title("🤖 AI Task Orchestrator")
+    st.title("AI Task Orchestrator")
 
     objective = st.text_area("Enter your objective:")
     file_content = st.text_area("Enter file content (optional):")
