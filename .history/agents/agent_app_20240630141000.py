@@ -25,7 +25,6 @@ footer {visibility: hidden;}
 header {visibility: hidden;}
 </style>
 """
-st.markdown(hide_st_style, unsafe_allow_html=True)
 KEYS = ["AIzaSyBkTJsctYOkljL0tx-6Y8NwYCaSz-r0XmU", "AIzaSyDbzt8ZGVd3P15MMuIUh8wz1lzT5jRLWlc"]
 # Sidebar for API key inputs
 st.sidebar.header("API Keys")
