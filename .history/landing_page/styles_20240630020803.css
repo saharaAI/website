@@ -85,6 +85,7 @@ nav ul li a:hover {
     background-color: var(--secondary-color);
 }
 
+/* Le reste du CSS reste le même avec quelques ajustements mineurs pour la cohérence */
 body {
     font-family: 'Arial', sans-serif;
     color: var(--text-color);
