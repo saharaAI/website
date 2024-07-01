@@ -1,4 +1,5 @@
 random
+typing
 io
 streamlit
 google-generativeai
