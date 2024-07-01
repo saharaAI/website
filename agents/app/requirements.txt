@@ -1,0 +1,15 @@
+hashlib
+os
+random
+typing
+io
+streamlit
+google-generativeai
+unstructured
+markdown
+pyperclip
+trafilatura
+requests
+beautifulsoup4
+concurrent
+json

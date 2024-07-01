@@ -112,7 +112,7 @@ def main():
             if message["role"] == "model":
                 col1, col2, col3 = st.columns([1, 1, 4])
                 with col1:
-                    copy_to_clipboard_v(message['parts'][0], "📋 Copier")
+                    pass
                 with col2:
                     md_buffer = export_chat([message], "md")
                     st.download_button(
@@ -149,9 +149,7 @@ def main():
             st.write(response)
             col1, col2, col3 = st.columns([1, 1, 4])
             with col1:
-                if st.button(f"📋 Copier", key=f"copy_{len(st.session_state.chat_history)}"):
-                    copy_to_clipboard_v(message['parts'][0], "📋 Copier")
-
+                pass
             with col2:
                 md_buffer = export_chat([{"role": "model", "parts": [response]}], "md")
                 st.download_button(
