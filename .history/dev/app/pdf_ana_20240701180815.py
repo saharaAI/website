@@ -196,3 +196,5 @@ def main():
         st.session_state.doc_content = ""
         st.experimental_rerun()
 
+if __name__ == '__main__':
+    main()
