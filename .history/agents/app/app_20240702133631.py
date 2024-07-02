@@ -2,7 +2,6 @@ import streamlit as st
 import requests
 import json
 from datetime import datetime
-import geocoder
 
 st.set_page_config(layout='wide', page_title='Sahara Analytics', page_icon='📄')
 from pdf_ana import main as pdf_analysis_main
@@ -18,6 +17,8 @@ def get_visitor_ip():
     except:
         return 'Unknown'
 
+
+import geocoder
 # Defining the function to get location from IP address
 def get_location(ip_address):
 
@@ -36,16 +37,15 @@ def get_location(ip_address):
 
 
 # Function to log IP address
-def log_ip_address_long_lat(ip_address):
+def log_ip_address(ip_address):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    country, city, lat, lng = get_location(ip_address)
     with open('ip_log.txt', 'a') as f:
-        f.write(f"{timestamp}: {ip_address } - Country: {country}, City: {city}, Latitude: {lat}, Longitude: {lng}\n")
+        f.write(f"{timestamp}: {ip_address 
 
 # Get and log the IP address at the start of the session
 if 'ip_logged' not in st.session_state:
     visitor_ip = get_visitor_ip()
-    log_ip_address_long_lat(visitor_ip)
+    log_ip_address(visitor_ip)
     st.session_state.ip_logged = True
 
 # Hide Streamlit elements

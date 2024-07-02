@@ -2,7 +2,6 @@ import streamlit as st
 import requests
 import json
 from datetime import datetime
-import geocoder
 
 st.set_page_config(layout='wide', page_title='Sahara Analytics', page_icon='📄')
 from pdf_ana import main as pdf_analysis_main
@@ -18,6 +17,7 @@ def get_visitor_ip():
     except:
         return 'Unknown'
 
+import geocoder
 # Defining the function to get location from IP address
 def get_location(ip_address):
 
