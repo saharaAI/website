@@ -95,7 +95,7 @@ class GeminiApp:
         - Offer insights or conclusions based on the analyzed content.
         - Provide any additional context or commentary.
         - Statistics
-        2. Table of key topics and main info and statistics , and analysis as financial expert as table makrkdown: 
+        2. Table of key topics and main info and statistics as table makrkdown: 
         3. JSON Output:
         Generate a JSON object with the following structure:
         {{
