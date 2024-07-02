@@ -6,4 +6,3 @@ pyperclip
 trafilatura
 beautifulsoup4
 psutil
-litellm

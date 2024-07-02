@@ -1,0 +1,30 @@
+FROM python:3.9-slim
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libxml2-dev \
+    libxslt1-dev \
+    antiword \
+    unrtf \
+    poppler-utils \
+    tesseract-ocr \
+    flac \
+    ffmpeg \
+    lame \
+    libmad0 \
+    libsox-fmt-mp3 \
+    sox \
+    libjpeg-dev \
+    swig
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8501
+
+CMD ["streamlit", "run", "--server.runOnSave", "true", "app.py"]
