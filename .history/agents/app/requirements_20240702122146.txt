@@ -1,7 +1,7 @@
 streamlit
 google-generativeai
+unstructured
 markdown
 pyperclip
 trafilatura
 beautifulsoup4
-psutil
