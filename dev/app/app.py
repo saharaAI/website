@@ -7,7 +7,7 @@ st.set_page_config(layout='wide', page_title='Sahara Analytics', page_icon='📄
 from pdf_ana import main as pdf_analysis_main
 from website_crawl import main as website_crawl_main
 from agent_app import main as agent_app_main
-
+from file_upload_prompts import main as file_upload_prompts
 
 # Hide Streamlit elements
 hide_st_style = """
@@ -118,6 +118,7 @@ page_names_to_funcs = {
     "Analyse PDF": pdf_analysis_page,
     "Website Crawl": website_crawl_main,
     "LLM Agents": agent_app_main,
+    "Data Upload > Prompts": file_upload_prompts
 }
 
 def main():

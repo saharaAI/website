@@ -27,6 +27,12 @@ header {visibility: hidden;}
 """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 KEYS = ["AIzaSyBkTJsctYOkljL0tx-6Y8NwYCaSz-r0XmU", "AIzaSyDbzt8ZGVd3P15MMuIUh8wz1lzT5jRLWlc"]
+
+#['AIzaSyD-m75DE6wDYVoW_MMoia6SvPeHWQgmSXQ', 'AIzaSyD0MTj7P_pCOg30J3pIrZ3COY9Rs4D9kCc']
+
+#["AIzaSyBkTJsctYOkljL0tx-6Y8NwYCaSz-r0XmU", "AIzaSyDbzt8ZGVd3P15MMuIUh8wz1lzT5jRLWlc"]
+
+
 # Sidebar for API key inputs
 st.sidebar.header("API Keys")
 openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
