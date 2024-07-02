@@ -92,8 +92,7 @@ def clean_json_string(json_string: str) -> List[Dict[str, str]]:
         return result
 def generate_prompts(file_content: str) -> List[Dict[str, str]]:
     prompt = f"""
-    ALWAYS ANSWER WITH FRENCH ONLY!! !
-    Based on the following file content, generate minimum 5 relevant prompts that a user might want to ask about the data.
+    Based on the following file content, generate 5 relevant prompts that a user might want to ask about the data.
     Format the prompts as a JSON list of dictionaries, where each dictionary has a 'prompt' key and a 'description' key.
 
     File content:
@@ -102,10 +101,7 @@ def generate_prompts(file_content: str) -> List[Dict[str, str]]:
     THE OUTPUT MUST BE A VALID JSON LIST OF DICTIONARIES. EXAMPLE FORMAT:
     [
         {{"prompt": "Summarize the main points", "description": "Get an overview of the key information"}},
-        {{"prompt": "Analyze trends in the data", "description": "Identify patterns and trends in the dataset"}},
-        {{"prompt": "Find relationships between variables", "description": "Identify relationships between variables in the dataset"}},
-        {{"prompt": "Identify outliers", "description": "Find outliers in the dataset"}},
-        {{"prompt": "Make predictions", "description": "Make predictions about the dataset"}}
+        {{"prompt": "Analyze trends in the data", "description": "Identify patterns and trends in the dataset"}}
     ]
     """
     
@@ -149,6 +145,7 @@ def main():
             except Exception as e:
                 st.error(f"Error generating prompts: {e}")
         
+        st.subheader("Suggested Prompts")
         for idx, p in enumerate(list_prompts):
             for prompt_idx, prompt in enumerate(p):
                 col1, col2 = st.columns(2)
