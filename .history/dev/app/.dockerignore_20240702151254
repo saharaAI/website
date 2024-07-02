@@ -1,0 +1,19 @@
+# Ignore everything in the dev directory
+dev/
+
+# Ignore the .streamlit directory
+dev/.streamlit/
+# Ignore the _pycache_ directory
+dev/__pycache__/
+# Ignore the uploads directory
+dev/uploads/
+
+# Ignore all temporary files 
+*.pyc
+__pycache__/
+.DS_Store
+
+# Ignore the local development environment files
+.env
+.git*
+.idea
