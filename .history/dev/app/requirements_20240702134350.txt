@@ -8,4 +8,3 @@ beautifulsoup4
 psutil
 litellm
 geocoder
-unstructured[pdf]
