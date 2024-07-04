@@ -8,7 +8,4 @@ def main():
     orchestrator = AITaskOrchestrator()
     orchestrator.main()
 
-
-
-if __name__ == "__main__":
-    main()
+    
