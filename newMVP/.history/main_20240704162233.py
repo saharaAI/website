@@ -9,6 +9,12 @@ def main():
     apply_custom_css()
     hide_streamlit_elements()
 
+    # Navigation sidebar
+    st.sidebar.title("Navigation")
+    
+    page = st.sidebar.selectbox("Select Page", PAGES.keys())
+    PAGES[page]()   
+
 
 if __name__ == "__main__":
     main()

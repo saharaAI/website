@@ -1,4 +1,6 @@
 import streamlit as st
+
+
 from config import APP_TITLE, APP_ICON,PAGES
 from app.utils import apply_custom_css, hide_streamlit_elements
 
@@ -9,6 +11,12 @@ def main():
     apply_custom_css()
     hide_streamlit_elements()
 
+    # Navigation sidebar
+    st.sidebar.title("Navigation")
+    
+    page = st.sidebar.selectbox("Select Page", PAGES.keys())
+    PAGES[page]()   
+    
 
 if __name__ == "__main__":
     main()
